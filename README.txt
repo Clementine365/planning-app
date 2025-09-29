@@ -1,20 +1,64 @@
+# Weekly Teaching & Personal Planner
 
-Educational Planning System - README / Quick Training
+A **Progressive Web App (PWA)** to help teachers or anyone organize their weekly activities, lesson planning, and personal tasks. The app allows you to **add, edit, delete, and track activities**, prevents scheduling conflicts, and keeps a **history of past activities**.
 
-QUICK START
-1. Open index.html in a browser (desktop or mobile). For mobile add to Home Screen (PWA).
-2. Click a day in the 'Week Overview' to edit lesson prep, grading notes, and personal tasks.
-3. Use Templates to save and quickly apply lesson plan skeletons.
-4. Export data using "Export JSON". Import by copying JSON into localStorage key 'eps_data' (advanced).
+---
 
-PILOT INSTRUCTIONS (1 month)
-- Week 1: Populate recurring lessons and templates. Use daily and add personal tasks.
-- Week 2-3: Track time spent and note conflicts; adjust templates.
-- Week 4: Collect feedback -> produce case study.
+## Features
 
-ARTIFACTS INCLUDED
-- index.html, styles.css, app.js, manifest.json, service-worker.js, README.txt
+- Add activities with **title, day, date, start time, and end time**.
+- Prevents scheduling conflicts within the same day/time.
+- Edit or delete any activity.
+- Weekly overview of all current activities.
+- Automatic **history section** for past activities.
+- Works offline as a PWA once installed.
+- Can be installed on desktop or mobile as a standalone app.
 
-NOTES ABOUT EXTENDING TO A PHONE APP
-- This project is PWA-ready: the manifest + service worker let users "install" it.
-- To turn it into a native app consider wrapping with Capacitor or Cordova, or building a React Native front-end connected to a backend.
+---
+
+## Installation
+
+### Option 1: Using GitHub Pages
+
+1. Clone or download this repository.
+2. Go to **Settings → Pages** and enable GitHub Pages (source: `main` branch, folder: `/`).
+3. Open the provided URL in your phone or desktop browser.
+4. Add the app to your home screen (Chrome/Edge: menu → "Add to Home screen").
+
+### Option 2: Local testing on your computer
+
+1. Open the folder in **VS Code**.
+2. Install the **Live Server** extension.
+3. Right-click `index.html` → **Open with Live Server**.
+4. The app will open in your browser at `http://127.0.0.1:5500/`.
+5. On your phone, use your computer's local IP to access the app over Wi-Fi.
+
+---
+
+## How to Use
+
+1. Fill in the form with:
+   - **Activity title**
+   - **Day of the week**
+   - **Date**
+   - **Start time**
+   - **End time**
+2. Click **Add / Save Activity** to add it to your weekly planner.
+3. All current activities appear under **Weekly Overview**.
+4. Use the **Edit** button to modify an activity.
+5. Use the **Delete** button to remove an activity.
+6. Past activities automatically move to the **History** section.
+7. Your activities are saved locally in your browser and persist offline.
+
+---
+
+## Notes
+
+- The app uses **localStorage**, so data is saved on the device/browser where it was added.
+- Offline use is supported via the service worker (`service-worker.js`).
+- For multi-device syncing, a backend like Firebase would be required.
+
+---
+
+## Files in this Repository
+
