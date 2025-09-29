@@ -1,0 +1,84 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #f4f4f4;
+  color: #333;
+}
+
+header {
+  background: #4a90e2;
+  color: #fff;
+  padding: 1rem;
+  text-align: center;
+}
+
+#activity-form, #overview {
+  padding: 1rem;
+  background: #fff;
+  margin: 1rem;
+  border-radius: 8px;
+}
+
+form input, form select {
+  margin: 0.5rem;
+  padding: 0.5rem;
+}
+
+button {
+  background: #4a90e2;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #3b7bc0;
+}
+
+.error {
+  color: red;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 10px;
+}
+
+.grid .day {
+  background: #e3e3e3;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.activity {
+  background: #65e6c4;
+  color: white;
+  padding: 5px;
+  margin: 3px 0;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+
+.activity-buttons {
+  margin-top: 3px;
+}
+
+.activity-buttons button {
+  background: #fff;
+  color: #44484d;
+  border: 1px solid #454749;
+  padding: 2px 5px;
+  font-size: 0.7em;
+  margin-right: 3px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.activity-buttons button:hover {
+  background: #99a1aa;
+  color: #fff;
+}
