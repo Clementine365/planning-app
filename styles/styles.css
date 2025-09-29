@@ -13,25 +13,31 @@ header {
   text-align: center;
 }
 
-#activity-form, #overview {
+#activity-form, #overview, #history {
   padding: 1rem;
   background: #fff;
   margin: 1rem;
   border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
-form input, form select {
-  margin: 0.5rem;
-  padding: 0.5rem;
+form input, form select, form button {
+  margin: 0.5rem 0;
+  padding: 0.6rem;
+  width: 100%;
+  font-size: 1em;
+  border-radius: 5px;
+  border: 1px solid #ccc;
 }
 
 button {
   background: #4a90e2;
   color: #fff;
-  padding: 0.5rem 1rem;
+  padding: 0.6rem 1rem;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  transition: 0.2s;
 }
 
 button:hover {
@@ -40,8 +46,11 @@ button:hover {
 
 .error {
   color: red;
+  font-size: 0.9em;
+  margin-top: 5px;
 }
 
+/* Weekly Grid */
 .grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
@@ -61,8 +70,13 @@ button:hover {
   margin: 3px 0;
   border-radius: 4px;
   font-size: 0.9em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
+/* Edit/Delete Buttons */
 .activity-buttons {
   margin-top: 3px;
 }
@@ -71,14 +85,47 @@ button:hover {
   background: #fff;
   color: #44484d;
   border: 1px solid #454749;
-  padding: 2px 5px;
+  padding: 3px 6px;
   font-size: 0.7em;
   margin-right: 3px;
   border-radius: 3px;
   cursor: pointer;
+  transition: 0.2s;
 }
 
 .activity-buttons button:hover {
   background: #99a1aa;
   color: #fff;
+}
+
+/* History Section */
+#history div {
+  background: #f5f5f5;
+  padding: 6px 8px;
+  margin-bottom: 4px;
+  border-radius: 6px;
+  font-size: 0.85em;
+}
+
+/* Mobile Responsive */
+@media (max-width: 600px) {
+  .grid {
+    grid-template-columns: 1fr; /* Stack days vertically on small screens */
+  }
+
+  .activity {
+    font-size: 0.85em;
+  }
+
+  form input, form select, form button {
+    font-size: 0.95em;
+  }
+
+  header h1 {
+    font-size: 1.3em;
+  }
+
+  h2 {
+    font-size: 1.1em;
+  }
 }
