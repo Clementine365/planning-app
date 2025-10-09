@@ -11,6 +11,24 @@ const saveNotes = document.getElementById("saveNotes");
 const saveMessage = document.getElementById("saveMessage");
 const backToTopBtn = document.getElementById("backToTop");
 
+// ======== HELPER: Get actual Date object for a task ========
+// 🆕 Converts task.day (like "Monday") + time (like "14:30") into a real Date for comparison
+function getTaskDateTime(task) {
+  const days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+  const today = new Date();
+  const todayIndex = today.getDay();
+  const taskDayIndex = days.indexOf(task.day);
+  if (taskDayIndex === -1) return null;
+
+  const diff = taskDayIndex - todayIndex;
+  const taskDate = new Date(today);
+  taskDate.setDate(today.getDate() + (diff >= 0 ? diff : diff + 7));
+
+  const [h, m] = task.time.split(":").map(Number);
+  taskDate.setHours(h, m, 0, 0);
+  return taskDate;
+}
+
 // ======== TASK FUNCTIONS ========
 function loadTasks() {
   const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
@@ -36,6 +54,15 @@ if (taskForm) {
     const details = taskForm.taskDetails.value.trim();
 
     if (!title || !day || !time || !endTime) return;
+
+    // 🆕 Prevent past scheduling
+    const taskDate = getTaskDateTime({ day, time });
+    const now = new Date();
+    if (taskDate < now) {
+      message.textContent = "⚠️ You can’t schedule a task in the past.";
+      message.style.color = "red";
+      return;
+    }
 
     const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
     const duplicate = tasks.some(t => t.day === day && (
@@ -80,6 +107,14 @@ function editTask(day, time) {
   const newTime = prompt("Edit Start Time (HH:MM):", task.time) || task.time;
   const newEndTime = prompt("Edit End Time (HH:MM):", task.endTime) || task.endTime;
 
+  // 🆕 Prevent editing into past
+  const editDate = getTaskDateTime({ day, time: newTime });
+  const now = new Date();
+  if (editDate < now) {
+    alert("⚠️ You cannot move a task to the past.");
+    return;
+  }
+
   const duplicate = tasks.some((t, i) => i !== index && t.day === day && (
     (newTime >= t.time && newTime < t.endTime) || (newEndTime > t.time && newEndTime <= t.endTime)
   ));
@@ -103,13 +138,14 @@ function renderWeekView() {
   const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
   const now = new Date();
 
-  if(currentTasksDiv) currentTasksDiv.innerHTML = "";
-  if(pastTasksDiv) pastTasksDiv.innerHTML = "";
+  if (currentTasksDiv) currentTasksDiv.innerHTML = "";
+  if (pastTasksDiv) pastTasksDiv.innerHTML = "";
 
   tasks.forEach(task => {
-    const taskDate = new Date();
-    const [hours, minutes] = task.time.split(":");
-    taskDate.setHours(hours, minutes, 0, 0);
+    const taskStart = getTaskDateTime(task);
+    const [eh, em] = task.endTime.split(":").map(Number);
+    const taskEnd = new Date(taskStart);
+    taskEnd.setHours(eh, em, 0, 0);
 
     const li = document.createElement("li");
     li.textContent = `${task.day} ${task.time}-${task.endTime}: ${task.title}`;
@@ -122,24 +158,25 @@ function renderWeekView() {
     deleteBtn.textContent = "Delete";
     deleteBtn.onclick = () => deleteTask(task.day, task.time);
 
-    if(taskDate >= now) {
+    // 🆕 Classify current vs past
+    if (taskEnd >= now) {
       li.appendChild(editBtn);
       li.appendChild(deleteBtn);
-      if(currentTasksDiv) currentTasksDiv.appendChild(li);
+      if (currentTasksDiv) currentTasksDiv.appendChild(li);
     } else {
       li.appendChild(deleteBtn);
-      if(pastTasksDiv) pastTasksDiv.appendChild(li);
+      if (pastTasksDiv) pastTasksDiv.appendChild(li);
     }
   });
 }
 
-// ======== DAY OVERVIEW WITH ACCURATE DATES & STARS ========
+// ======== DAY OVERVIEW (unchanged) ========
 function renderDayOverview() {
   if (!dayOverview) return;
   const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
   const days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
   const today = new Date();
-  const currentWeekDay = today.getDay(); // Sunday=0
+  const currentWeekDay = today.getDay();
 
   dayOverview.innerHTML = "";
 
