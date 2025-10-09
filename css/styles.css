@@ -225,3 +225,12 @@ footer {
     grid-template-columns: 1fr;
   }
 }
+.busy {
+  background-color: #ffecec;
+  border-left: 4px solid #e44;
+}
+
+.free {
+  background-color: #e8ffe8;
+  border-left: 4px solid #4c4;
+}
